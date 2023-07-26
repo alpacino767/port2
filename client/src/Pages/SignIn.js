@@ -115,9 +115,12 @@ const handleChange = (e) => {
                     <button type="submit" disabled={isLoading} onSubmit={onSubmit} style={{ cursor:"pointer"}} className="btn-5">Login Fiber Account</button> 
                  
                     </div> 
-                    <div style={{fontSize: "12px", paddingLeft: "19rem"}}>
+                    {/* <div style={{fontSize: "12px", paddingLeft: "19rem"}}>
                   <Link to={"/forgot"}><p>Forgot Password ?</p></Link>
-                  </div>
+                  </div> */}
+                  <div className="beneath">
+                            <Link to="/SignUp"  ><p className="ready">Don't have an account?<span className="sign" style={{ cursor: "pointer" }}>Sign Up</span></p> </Link>
+                        </div>
 
                  
                     

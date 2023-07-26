@@ -126,7 +126,7 @@ function SignUp() {
                             <button type="submit" disabled={isLoading} onSubmit={onSubmit} style={{ cursor: "pointer" }} className="btn-6">Create Fiber Account</button>
                             {/* </Link> */}
                         </div>
-                        <div className="beneath" on>
+                        <div className="beneath">
                             <Link to="/SignIn"  ><p className="ready">Already have an account?<span className="sign" style={{ cursor: "pointer" }}>Sign in</span></p> </Link>
                         </div>
                     </section>
