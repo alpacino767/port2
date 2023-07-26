@@ -144,8 +144,7 @@ const resetPassword = async (details) => {
     try {
         const response = await  axios.post('/api/v1/auth/updatepassword', details)
         const { status } = response.data
-        ("see response", status);
-        
+        console.log(status);
         
     } catch (error) {
     
