@@ -5,18 +5,20 @@ import { useNavigate } from 'react-router-dom'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Alert from "../Components/Alert";
+import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from '@react-oauth/google';
 import { useAppContext } from "../context/appContext";
 
 
 
-
-const eye = <FontAwesomeIcon icon={faEye} />;
 
 
 const initialState = {
     name: "",
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
+    confirmPassword: '',
     // isMember: false,
 
 
@@ -26,7 +28,36 @@ const initialState = {
 function SignUp() {
     const navigate = useNavigate()
     const [values, setValues] = useState(initialState)
-    const { user, showAlert, isLoading, displayAlert, registerUser, loginUser } = useAppContext()
+    const { user, showAlert, isLoading, displayAlert, registerUser, loginUser, signupGoogle } = useAppContext()
+
+    // const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
+
+    // const handleChange = (e) => setsForm({
+    //     ...sForm,
+    //     [e.target.name]: e.target.value
+    // });
+
+    function handleGoogleLoginSuccess(tokenResponse) {
+     console.log("token res",tokenResponse);
+        const accessToken = tokenResponse;
+        signupGoogle(accessToken)
+    
+    }
+   
+    const handleLogin = console.log("handleLogin");
+
+    function handleOnSubmit(e) {
+        e.preventDefault();
+        if (sForm.firstName !== "" && sForm.lastName !== "" && sForm.password !== "" && sForm.confirmPassword !== "" && sForm.email !== "" && sForm.password === sForm.confirmPassword && sForm.password.length >= 4) {
+
+        }
+    }
+
+    // const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
+
+    const [sForm,
+        setsForm] = useState(initialState)
+    const eye = <FontAwesomeIcon icon={faEye} />;
 
 
     const [show, setShow] = useState(false)
@@ -65,6 +96,7 @@ function SignUp() {
     }, [user, navigate])
 
 
+    
     return (
 
         <form onSubmit={onSubmit}>
@@ -129,6 +161,16 @@ function SignUp() {
                         <div className="beneath">
                             <Link to="/SignIn"  ><p className="ready">Already have an account?<span className="sign" style={{ cursor: "pointer" }}>Sign in</span></p> </Link>
                         </div>
+                        <div  style={{ marginTop:"-9rem", display:"flex", justifyContent:"center", alignItems:"center"}}>
+               <div>
+               <GoogleOAuthProvider clientId="908507029918-1o9up7orqurl9jk2glmc4io7qdn7nkog.apps.googleusercontent.com">
+            <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                // onClick={useGoogleLogin({onSuccess: handleGoogleLoginSuccess})}
+            />
+        </GoogleOAuthProvider>
+               </div>
+            </div>
                     </section>
                     <section className="right">
 
@@ -154,8 +196,7 @@ function SignUp() {
 
 
             </div>
-
-
+    
         </form>
     )
 }

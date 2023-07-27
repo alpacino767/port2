@@ -16,6 +16,31 @@ const app = express()
 //     app.use(morgan("dev"))
 // }
 
+
+// const {OAuth2client} = require('google-auth-library')
+
+
+
+// router.post('/', async function(req, res, next){
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     res.header('Referral-Policy', 'no-referrer-when-downgrade')
+
+//     const redirectUrl = 'http://localhost:3000'
+//     const oAuth2client = new OAuth2client( 
+//          process.env.CLIENT_ID,
+//     process.env.CLIENT_SECRET,
+//     redirectUrl)
+//    const authorizeUrl = oAuth2client.generateAuthUrl({
+//     access_type: 'offline',
+//     scope: 'https://www.googleleapis.com/auth/userinfo.profile openid',
+//     prompt: consent
+//    })
+//    res.json({url:authorizeUrl})
+// })
+
+
+
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // for deployment
@@ -26,6 +51,7 @@ app.use(express.urlencoded({ extended: false}))
 
 //  auth
 import authRouter from "./routes/authRoutes.js"
+import router from "./routes/authRoutes.js";
 
 
 

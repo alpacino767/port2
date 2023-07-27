@@ -25,6 +25,7 @@ const reducer = (state, action) => {
         return { ...state, isLoading: true }
     }
     if(action.type === REGISTER_USER_SUCCESS){
+        console.log("state", state);
         return { ...state, isLoading: false, token: action.payload.token, user:action.payload.user , showAlert: true, alertType: "success" ,alertText: "User created! Redirecting"}
     }
     if(action.type === REGISTER_USER_ERROR){

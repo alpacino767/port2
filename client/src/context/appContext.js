@@ -94,6 +94,27 @@ const AppProvider = ({ children }) => {
       clearAlert()
     
     }
+    const signupGoogle = async (accessToken) => {
+        dispatch({ type: REGISTER_USER_BEGIN })
+        try {
+          const response = await axios.post('/api/v1/auth/register', {googleAccesstoken: accessToken})
+          // (response);
+          const { user, token } = response.data
+          dispatch ({
+              type: REGISTER_USER_SUCCESS,
+              payload: { user, token},
+          })
+          addUserToLocalStorage({user, token})
+        } catch (error) {
+          // (error.response);
+          dispatch({
+              type: REGISTER_USER_ERROR,
+              payload: { msg: error.response.data.msg}
+          })
+        }
+        clearAlert()
+      
+      }
 
      const loginUser = async (currentUser ) => {
         dispatch({ type: LOGIN_USER_BEGIN })
@@ -117,6 +138,31 @@ const AppProvider = ({ children }) => {
         clearAlert()
       
      }
+
+
+     const signingoogle = async (accessToken) => {
+        dispatch({ type: LOGIN_USER_BEGIN })
+        try {
+          const { data  } = await axios.post('/api/v1/auth/login', {googleAccesstoke: accessToken})
+          const { user, token } = data
+       
+          dispatch ({
+              type: LOGIN_USER_SUCCESS,
+              payload: { user, token},
+          })
+          addUserToLocalStorage({user, token})
+        } catch (error) {
+            console.log(error);
+
+          dispatch({
+              type: LOGIN_USER_ERROR,
+              payload: { msg: error.response.data.msg}
+          })
+        }
+        clearAlert()
+      
+     }
+
 
 const logoutUser = async () => {
     // await authFetch.get("/auth/logout")
@@ -157,7 +203,7 @@ const resetPassword = async (details) => {
 
 
     return (
-        <AppContext.Provider value={{ ...state , displayAlert, registerUser, loginUser,logoutUser, passwordAlert, forgotpassword, resetPassword,resetAlert }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ ...state , displayAlert, registerUser, loginUser,logoutUser, passwordAlert, forgotpassword, resetPassword,resetAlert,signingoogle,signupGoogle }}>{children}</AppContext.Provider>
     )
 }
 

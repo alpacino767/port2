@@ -17,7 +17,6 @@ const initialState = {
     email: "",
     password: "",
     // isMember: false,
- 
 
 }
 
@@ -120,12 +119,14 @@ const handleChange = (e) => {
                   </div> */}
                   <div className="beneath">
                             <Link to="/SignUp"  ><p className="ready">Don't have an account?<span className="sign" style={{ cursor: "pointer" }}>Sign Up</span></p> </Link>
-                        </div>
-
-                 
-                    
+                        </div>                 
+                    {/* <div style={{ cursor:"pointer" , marginTop:"-8rem" , marginLefT:"11rem" }} >
+                    <button type="button" onClick={() => auth()}>
+                            <img src={googleButton} alt="goodle sign in" ></img>
+                        </button>
+                    </div> */}
                 </section>
-             
+                
 
                
             </div>

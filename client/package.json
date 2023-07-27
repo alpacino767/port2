@@ -5,15 +5,19 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@react-oauth/google": "^0.11.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
+    "react-use-googlelogin": "^0.12.5",
+    "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,5 +48,5 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "webpack-dev-server": "^4.15.1"
   },
-  "proxy": "http://localhost:8000/"
+  "proxy": "http://localhost:8000"
 }

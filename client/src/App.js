@@ -6,7 +6,6 @@ import { SignIn, SignUp, Error, Dashboard, ProtectedRoute } from "./Pages";
 
 
 
-
 function App() {
 
  
@@ -25,6 +24,8 @@ function App() {
   {/* <Route path='/reset-password/:id/:token' element={<Reset />}></Route> */}
 <Route path="*" element={<Error />} />
 </Routes>
+
+
 
 </div>
 
