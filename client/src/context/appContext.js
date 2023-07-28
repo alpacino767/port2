@@ -8,22 +8,23 @@ import toast from "react-hot-toast"
 
 const token = localStorage.getItem("token")
 const user = localStorage.getItem("user")
-
+const nasaImageDetails = localStorage.getItem("imageDetails")
+ const parsedNasaImageDetails = JSON.parse(nasaImageDetails)
 const initialState = {
     isLoading: false,
     showAlert: false,
     alertText: "",
     alertType: "",
-    user: user? JSON.parse(user):null,
+    user: user ? JSON.parse(user) : null,
     token: token,
-    nasaImageDetails: {}
+    nasaImageDetails: nasaImageDetails ? parsedNasaImageDetails.data : null
 }
 
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    console.log("state", state);
+
     // axios
     const authFetch = axios.create({
         baseURL: "api/v1",

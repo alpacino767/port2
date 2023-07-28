@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.pre('save', async function() {
-    if (this.isModified('password') && this.password){
+    if (this.password){
         const salt = await bcrypt.genSalt(10)
         this.password = await bcrypt.hash(this.password, salt)
     }
@@ -43,7 +43,7 @@ UserSchema.methods.createJWT = function () {
 }
 
 UserSchema.methods.comparePassword = async function (candidatePassword){
-    if (this.isModified('password') && this.password){
+    if (this.password){
         const isMatch = await bcrypt.compare(candidatePassword, this.password)
         return isMatch
     }

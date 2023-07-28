@@ -10,15 +10,10 @@ const Dashboard = () => {
     // Check if image details exist in local storage and date matches current date
     const cachedNasaImage = JSON.parse(localStorage.getItem("imageDetails"));
     const currentDate = new Date().toISOString().slice(0, 10);
-
-    console.log("cachedNasaImage", cachedNasaImage, currentDate);
-    if (cachedNasaImage && cachedNasaImage.dateAdded === currentDate) {
-      console.log("is working");
-      setImageDetails(cachedNasaImage);
-    } else {
+    if (!(cachedNasaImage && cachedNasaImage.dateAdded === currentDate)) {
       fetchNasaImage();
-    }
-  }, [fetchNasaImage, setImageDetails]);
+    } 
+  }, [fetchNasaImage]);
 
   return (
     <div className="body-bg">

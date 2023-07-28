@@ -115,16 +115,19 @@ const login = async (req, res) => {
       });
   } else {
     const { email, password } = req.body;
+    console.log("email passowr", email , password);
 
     if (!email || !password) {
       throw new BadRequestError("Please provide all values");
     }
     const user = await User.findOne({ email }).select("+password");
+   
     if (!user) {
       throw new UnAuthenticatedError("Invalid credentials");
     }
 
     const isPasswordCorrect = await user.comparePassword(password);
+    console.log("ispass", isPasswordCorrect, password);
     if (!isPasswordCorrect) {
       throw new UnAuthenticatedError("Invalid credentials");
     }

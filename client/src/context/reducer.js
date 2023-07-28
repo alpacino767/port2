@@ -19,7 +19,6 @@ import { DISPLAY_ALERT ,
  import  { initialState } from './appContext'
 
 const reducer = (state, action) => {
-    console.log("reducerstate", state);
     if(action.type === DISPLAY_ALERT){
         return {...state, showAlert: true, alertType: "danger", alertText: "Please provide all values!"}
     }
@@ -85,7 +84,6 @@ const reducer = (state, action) => {
     }
     
     if(action.type ===  SET_IMAGE){
-        console.log("payload", action.payload);
         return { ...state, isLoading: true, nasaImageDetails: action.payload.data  ,  alertType: 'danger', alertText: "User does not exist" }
     }
     
