@@ -1,147 +1,194 @@
-
 import React from "react";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Alert from "../Components/Alert";
 import { useAppContext } from "../context/appContext";
+import { GoogleLogin } from "react-google-login";
+// eslint-disable-next-line
+import { gapi } from "gapi-script";
 
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
+window.gapi.load("client:auth2", () => {
+  window.gapi.client.init({
+    clientId:
+      "908507029918-1o9up7orqurl9jk2glmc4io7qdn7nkog.apps.googleusercontent.com",
+    plugin_name: "chat",
+  });
+});
 
 const initialState = {
-    name: "",
-    email: "",
-    password: "",
-    // isMember: false,
+  name: "",
+  email: "",
+  password: "",
+};
 
-}
+function SignIn() {
+  const navigate = useNavigate();
+  const [values, setValues] = useState(initialState);
+  const {
+    user,
+    showAlert,
+    isLoading,
+    displayAlert,
+    loginUser,
+    signinGoogle,
+  } = useAppContext();
 
+  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    setShow(!show);
+  };
 
-function SignIn()  {
-    const navigate = useNavigate()
-    const [values, setValues] = useState(initialState)
-    const { user, showAlert, isLoading, displayAlert, registerUser, loginUser } = useAppContext()
-  
-const [show, setShow] = useState(false)
-const handleShow = () => {
-    setShow(!show)
-}
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const { accessToken } = tokenResponse;
+    console.log("acc tok", accessToken);
+    signinGoogle(accessToken);
+  }
 
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
-const handleChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.value})
-   }
-   
-   const onSubmit = (e) => {
-       e.preventDefault()
-       const {  email, password, isMember } = values
-      if(!email || !password ) {
-        displayAlert()
-        return
-      }
-      const currentUser = { email, password } 
-      if(isMember){
-      registerUser(currentUser)
-    } else {
-        loginUser(currentUser)
-      }
-      
-      
-   }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = values;
+    if (!email || !password) {
+      displayAlert();
+      return;
+    }
+    const currentUser = { email, password };
+    loginUser(currentUser);
+  };
 
   useEffect(() => {
-    if(user) {
-        setTimeout(() => {
-            navigate('/dashboard')
-        }, 3000)
+    if (user) {
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 3000);
     }
-    }, [user, navigate])
+  }, [user, navigate]);
 
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="App-4">
+        <div className="wrapper">
+          <section>
+            <div className="navigation-1"></div>
 
-    return (
+            <div className="head-4">
+              <h2>Login to your NASA Account</h2>
+            </div>
+            {showAlert && <Alert />}
 
-       <form onSubmit={onSubmit}>
-         <div className="App-4">
-            <div className="wrapper">
-                <section 
-                // className="left"
-                >
+            <form
+              type="email"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              className="search-3"
+            >
+              <h4 className="down">E-mail</h4>
 
-                    <div className='navigation-1'>
-                    </div>
-                   
-                  <div className="head-4"><h2>
-                        Login your Fiber Account
-                    </h2>
-                    </div>
-                    {showAlert && <Alert />}
-                  
-            
-                    <form type='email' name="email" value={values.email} onChange={handleChange} className="search-3">
-                        <h4 className="down">E-mail</h4>
-                      
-                            <label>
-                                <input className="in" type="text" name="email" placeholder="john@example.com" />
-                            </label>
-
-                        
-
-                    </form>
-                    <div className="search-3">
-                        <h4 className="down">Password</h4>
-                        <form type="password" name="password" value={values.password} onChange={handleChange}>
-                            <label>
-                                <input className="in" type={show?"text": "password"} name="password" placeholder="At least 6 characters" />
-                                <i onClick={handleShow} className="eye">{eye}</i>
-
-                            </label>
-
-                        </form>
-
-                    </div>
-
-                    <div className="">
-                        <label className="terms">
-                           
-                        </label>
-                    </div>
-                    <div className="account1">
-
-                    <button type="submit" disabled={isLoading} onSubmit={onSubmit} style={{ cursor:"pointer"}} className="btn-5">Login Fiber Account</button> 
-                 
-                    </div> 
-                    {/* <div style={{fontSize: "12px", paddingLeft: "19rem"}}>
-                  <Link to={"/forgot"}><p>Forgot Password ?</p></Link>
-                  </div> */}
-                  <div className="beneath">
-                            <Link to="/SignUp"  ><p className="ready">Don't have an account?<span className="sign" style={{ cursor: "pointer" }}>Sign Up</span></p> </Link>
-                        </div>                 
-                    {/* <div style={{ cursor:"pointer" , marginTop:"-8rem" , marginLefT:"11rem" }} >
-                    <button type="button" onClick={() => auth()}>
-                            <img src={googleButton} alt="goodle sign in" ></img>
-                        </button>
-                    </div> */}
-                </section>
-                
-
-               
+              <label>
+                <input
+                  className="in"
+                  type="text"
+                  name="email"
+                  placeholder="john@example.com"
+                />
+              </label>
+            </form>
+            <div className="search-3">
+              <h4 className="down">Password</h4>
+              <form
+                type="password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+              >
+                <label>
+                  <input
+                    className="in"
+                    type={show ? "text" : "password"}
+                    name="password"
+                    placeholder="At least 6 characters"
+                  />
+                  <i onClick={handleShow} className="eye">
+                    {eye}
+                  </i>
+                </label>
+              </form>
             </div>
 
+            <div className="">
+              <label className="terms"></label>
+            </div>
+            {/* <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            > <button
+            type="submit"
+            disabled={isLoading}
+            onSubmit={onSubmit}
+            style={{ cursor: "pointer" }}
+            // className="new-btn"
+          >
+            Login Fiber Account
+          </button>
+                </div> */}
+            <div className="account1">
+              <button
+                type="submit"
+                disabled={isLoading}
+                onSubmit={onSubmit}
+                style={{ cursor: "pointer" }}
+                className="btn-5"
+              >
+                Login Fiber Account
+              </button>
+            </div>
+            <div className="beneath">
+              <Link to="/SignUp">
+                <p className="ready">
+                  Don't have an account?
+                  <span className="sign" style={{ cursor: "pointer" }}>
+                    Sign Up
+                  </span>
+                </p>{" "}
+              </Link>
+            </div>
 
-
+            <div
+              style={{
+                marginTop: "-9rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <GoogleLogin
+               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                buttonText="Signin with Google"
+                onSuccess={handleGoogleLoginSuccess}
+                onFailure={(error) =>
+                  console.log("Google login failed:", error)
+                }
+                cookiePolicy={"single_host_origin"}
+              />
+            </div>
+          </section>
         </div>
-
-
-       </form>
-    )
+      </div>
+    </form>
+  );
 }
 
-
-
-
-
-export default SignIn
+export default SignIn;

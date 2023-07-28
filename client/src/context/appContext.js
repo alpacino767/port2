@@ -2,7 +2,7 @@ import React , {  useReducer, useContext} from "react";
 import reducer from "./reducer";
 import axios from "axios"
 import { CLEAR_ALERT, DISPLAY_ALERT ,REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR,
-LOGIN_USER_BEGIN,LOGIN_USER_SUCCESS,LOGIN_USER_ERROR, LOGOUT_USER, FORGOT_PASSWORD_ERROR, FORGOT_PASSWORD_BEGIN, RESET_PASSWORD_BEGIN,RESET_PASSWORD_ERROR} from "./actions"
+LOGIN_USER_BEGIN,LOGIN_USER_SUCCESS,LOGIN_USER_ERROR, LOGOUT_USER, FORGOT_PASSWORD_ERROR,RESET_PASSWORD_ERROR, IMAGE_LOAD_BEGIN, IMAGE_LOAD_SUCCESS, IMAGE_LOAD_ERROR, SET_IMAGE} from "./actions"
 import toast from "react-hot-toast"
 
 
@@ -16,12 +16,14 @@ const initialState = {
     alertType: "",
     user: user? JSON.parse(user):null,
     token: token,
+    nasaImageDetails: {}
 }
 
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    console.log("state", state);
     // axios
     const authFetch = axios.create({
         baseURL: "api/v1",
@@ -72,6 +74,16 @@ const AppProvider = ({ children }) => {
         localStorage.removeItem("token")
         localStorage.removeItem("user")
     }
+    const addImageToLocalStorage = (imageDetails) => {
+        console.log("img det", imageDetails);
+        localStorage.setItem("imageDetails", JSON.stringify(imageDetails))
+
+    }
+
+
+
+
+
 
     const registerUser = async (currentUser) => {
       dispatch({ type: REGISTER_USER_BEGIN })
@@ -97,7 +109,7 @@ const AppProvider = ({ children }) => {
     const signupGoogle = async (accessToken) => {
         dispatch({ type: REGISTER_USER_BEGIN })
         try {
-          const response = await axios.post('/api/v1/auth/register', {googleAccesstoken: accessToken})
+          const response = await axios.post('/api/v1/auth/register', {googleAccessToken: accessToken})
           // (response);
           const { user, token } = response.data
           dispatch ({
@@ -140,10 +152,11 @@ const AppProvider = ({ children }) => {
      }
 
 
-     const signingoogle = async (accessToken) => {
+     const signinGoogle = async (accessToken) => {
         dispatch({ type: LOGIN_USER_BEGIN })
         try {
-          const { data  } = await axios.post('/api/v1/auth/login', {googleAccesstoke: accessToken})
+          const { data  } = await axios.post('/api/v1/auth/login', {googleAccessToken: accessToken})
+          console.log("signin token", accessToken);
           const { user, token } = data
        
           dispatch ({
@@ -170,40 +183,43 @@ const logoutUser = async () => {
     removeUserFromLocalStorage()
 }
 
-const forgotpassword = async (forgotEmail) => {
-
-   
-    dispatch({ type: FORGOT_PASSWORD_BEGIN })
+const fetchNasaImage = async () => {
+    console.log("fetchin image");
+    dispatch({ type: IMAGE_LOAD_BEGIN })
     try {
-        const response = await  axios.post('/api/v1/auth/forgotpassword', forgotEmail)
-        toast.success(response.data)
-        
+      const response = await axios.get('/api/v1/img/nasa-image')
+      console.log("response", response);
+      // (response);
+      dispatch ({
+          type: IMAGE_LOAD_SUCCESS,
+          payload: response.data
+      })
+      console.log("response data", response.data);
+      const  data  = response.data
+      const dateAdded = new Date().toISOString().slice(0, 10)
+        addImageToLocalStorage({data, dateAdded})
+
     } catch (error) {
-        toast.error(error.response.data)
+      // (error.response);
+      dispatch({
+          type: IMAGE_LOAD_ERROR,
+          payload: { msg: error.response.data.msg}
+      })
+
+}
+}
+const setImageDetails = (imageDetails) => {
+    dispatch({ type: SET_IMAGE,
+               payload: imageDetails
+    }) 
+
+    clearAlert()
   
-    }
-}
-
-const resetPassword = async (details) => {
-   
-    dispatch({ type: RESET_PASSWORD_BEGIN })
-    try {
-        const response = await  axios.post('/api/v1/auth/updatepassword', details)
-        const { status } = response.data
-        console.log(status);
-        
-    } catch (error) {
-    
-        dispatch({
-            type: RESET_PASSWORD_ERROR,
-            payload: { msg: error.response.data.msg}
-        })
-    }
-}
-
+  }
+  
 
     return (
-        <AppContext.Provider value={{ ...state , displayAlert, registerUser, loginUser,logoutUser, passwordAlert, forgotpassword, resetPassword,resetAlert,signingoogle,signupGoogle }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ ...state , displayAlert, registerUser, loginUser,logoutUser, passwordAlert, resetAlert, signinGoogle, signupGoogle, fetchNasaImage, setImageDetails}}>{children}</AppContext.Provider>
     )
 }
 
@@ -211,4 +227,4 @@ const useAppContext = () => {
     return useContext(AppContext)
 }
 
-export {AppProvider,initialState,useAppContext}
+export {AppProvider, initialState, useAppContext}

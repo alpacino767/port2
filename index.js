@@ -12,31 +12,6 @@ import cookieParser from "cookie-parser"
 
 const app = express()
 
-// if(process.env.NODE_ENV !== "production"){
-//     app.use(morgan("dev"))
-// }
-
-
-// const {OAuth2client} = require('google-auth-library')
-
-
-
-// router.post('/', async function(req, res, next){
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     res.header('Referral-Policy', 'no-referrer-when-downgrade')
-
-//     const redirectUrl = 'http://localhost:3000'
-//     const oAuth2client = new OAuth2client( 
-//          process.env.CLIENT_ID,
-//     process.env.CLIENT_SECRET,
-//     redirectUrl)
-//    const authorizeUrl = oAuth2client.generateAuthUrl({
-//     access_type: 'offline',
-//     scope: 'https://www.googleleapis.com/auth/userinfo.profile openid',
-//     prompt: consent
-//    })
-//    res.json({url:authorizeUrl})
-// })
 
 
 
@@ -52,7 +27,7 @@ app.use(express.urlencoded({ extended: false}))
 //  auth
 import authRouter from "./routes/authRoutes.js"
 import router from "./routes/authRoutes.js";
-
+import imageRouter from "./routes/imageRoutes.js"
 
 
 
@@ -76,6 +51,8 @@ app.get('/api/v1', (req, res) => {
 const port = process.env.PORT || 8000
 
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/img", imageRouter)
+
 
 // for deployment
 app.get('*', (req, res) => {

@@ -10,11 +10,16 @@ import { DISPLAY_ALERT ,
      FORGOT_PASSWORD_BEGIN,
      FORGOT_PASSWORD_ERROR,
      RESET_PASSWORD_BEGIN,
-     RESET_PASSWORD_ERROR
+     RESET_PASSWORD_ERROR,
+     IMAGE_LOAD_BEGIN,
+     IMAGE_LOAD_SUCCESS,
+     IMAGE_LOAD_ERROR,
+     SET_IMAGE,
     } from "./actions"
  import  { initialState } from './appContext'
 
 const reducer = (state, action) => {
+    console.log("reducerstate", state);
     if(action.type === DISPLAY_ALERT){
         return {...state, showAlert: true, alertType: "danger", alertText: "Please provide all values!"}
     }
@@ -67,8 +72,27 @@ const reducer = (state, action) => {
     if(action.type === RESET_PASSWORD_ERROR){
         return { ...state, isLoading: true, alertType: 'danger', alertText: "User does not exist" }
     }
+
+    if(action.type ===  IMAGE_LOAD_BEGIN){
+        return { ...state, isLoading: true }
+    }
+    if(action.type ===  IMAGE_LOAD_SUCCESS){
+        console.log("payload", action.payload);
+        return { ...state, isLoading: false, nasaImageDetails: action.payload , alertType: 'success',  }
+    }
+    if(action.type ===  IMAGE_LOAD_ERROR){
+        return { ...state, isLoading: true, alertType: 'danger', alertText: "User does not exist" }
+    }
+    
+    if(action.type ===  SET_IMAGE){
+        console.log("payload", action.payload);
+        return { ...state, isLoading: true, nasaImageDetails: action.payload.data  ,  alertType: 'danger', alertText: "User does not exist" }
+    }
+    
     
     throw new Error(`no such action : ${action.type}`)
+
 }
+
 
 export default reducer
