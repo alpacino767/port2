@@ -3,7 +3,7 @@ import reducer from "./reducer";
 import axios from "axios"
 import { CLEAR_ALERT, DISPLAY_ALERT ,REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR,
 LOGIN_USER_BEGIN,LOGIN_USER_SUCCESS,LOGIN_USER_ERROR, LOGOUT_USER, FORGOT_PASSWORD_ERROR,RESET_PASSWORD_ERROR, IMAGE_LOAD_BEGIN, IMAGE_LOAD_SUCCESS, IMAGE_LOAD_ERROR, SET_IMAGE} from "./actions"
-import toast from "react-hot-toast"
+
 
 
 const token = localStorage.getItem("token")
