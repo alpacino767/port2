@@ -37,7 +37,7 @@ const Dashboard = () => {
 
       <div className="card-container">
         <div className="image-card">
-          {nasaImageDetails.data && (
+          {nasaImageDetails !== null && (
             <div className="image-container">
               {nasaImageDetails.links && (
                 <img
