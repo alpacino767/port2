@@ -14,7 +14,6 @@ import { DISPLAY_ALERT ,
      IMAGE_LOAD_BEGIN,
      IMAGE_LOAD_SUCCESS,
      IMAGE_LOAD_ERROR,
-     SET_IMAGE,
     } from "./actions"
  import  { initialState } from './appContext'
 
@@ -83,9 +82,7 @@ const reducer = (state, action) => {
         return { ...state, isLoading: true, alertType: 'danger', alertText: "User does not exist" }
     }
     
-    if(action.type ===  SET_IMAGE){
-        return { ...state, isLoading: true, nasaImageDetails: action.payload.data  ,  alertType: 'danger', alertText: "User does not exist" }
-    }
+
     
     
     throw new Error(`no such action : ${action.type}`)

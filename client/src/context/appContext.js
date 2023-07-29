@@ -2,7 +2,7 @@ import React , {  useReducer, useContext} from "react";
 import reducer from "./reducer";
 import axios from "axios"
 import { CLEAR_ALERT, DISPLAY_ALERT ,REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR,
-LOGIN_USER_BEGIN,LOGIN_USER_SUCCESS,LOGIN_USER_ERROR, LOGOUT_USER, FORGOT_PASSWORD_ERROR,RESET_PASSWORD_ERROR, IMAGE_LOAD_BEGIN, IMAGE_LOAD_SUCCESS, IMAGE_LOAD_ERROR, SET_IMAGE} from "./actions"
+LOGIN_USER_BEGIN,LOGIN_USER_SUCCESS,LOGIN_USER_ERROR, LOGOUT_USER, FORGOT_PASSWORD_ERROR,RESET_PASSWORD_ERROR, IMAGE_LOAD_BEGIN, IMAGE_LOAD_SUCCESS, IMAGE_LOAD_ERROR} from "./actions"
 
 
 
@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
     const addImageToLocalStorage = (imageDetails) => {
         console.log("img det", imageDetails);
         localStorage.setItem("imageDetails", JSON.stringify(imageDetails))
-
+       
     }
 
 
@@ -208,11 +208,7 @@ const fetchNasaImage = async () => {
       })
 
 }
-}
-const setImageDetails = (imageDetails) => {
-    dispatch({ type: SET_IMAGE,
-               payload: imageDetails
-    }) 
+
 
     clearAlert()
   
@@ -220,7 +216,7 @@ const setImageDetails = (imageDetails) => {
   
 
     return (
-        <AppContext.Provider value={{ ...state , displayAlert, registerUser, loginUser,logoutUser, passwordAlert, resetAlert, signinGoogle, signupGoogle, fetchNasaImage, setImageDetails}}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ ...state , displayAlert, registerUser, loginUser,logoutUser, passwordAlert, resetAlert, signinGoogle, signupGoogle, fetchNasaImage}}>{children}</AppContext.Provider>
     )
 }
 
