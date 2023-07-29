@@ -6,6 +6,15 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
+import dotenv from "dotenv";
+
+
+
+dotenv.config();
+
+
+
+
 
 import cookieParser from "cookie-parser";
 
