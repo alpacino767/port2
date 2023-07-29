@@ -4,8 +4,4 @@ import Error from "./Error";
 import Dashboard from "./Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 
-
-
-
-
-export { SignIn, SignUp, Error, Dashboard, ProtectedRoute }
+export { SignIn, SignUp, Error, Dashboard, ProtectedRoute };

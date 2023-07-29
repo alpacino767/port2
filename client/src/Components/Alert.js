@@ -6,7 +6,7 @@ const Alert = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <span className="spinner"></span>
+      {alertText && <span className="spinner"></span>}
       <div className={`alert alert-${alertType}`}>{alertText}</div>
     </div>
   );

@@ -10,13 +10,11 @@ import { GoogleLogin } from "react-google-login";
 // eslint-disable-next-line
 import { gapi } from "gapi-script";
 
-
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 window.gapi.load("client:auth2", () => {
   window.gapi.client.init({
-    clientId:
-      "908507029918-1o9up7orqurl9jk2glmc4io7qdn7nkog.apps.googleusercontent.com",
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     plugin_name: "chat",
   });
 });
@@ -30,14 +28,8 @@ const initialState = {
 function SignIn() {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
-  const {
-    user,
-    showAlert,
-    isLoading,
-    displayAlert,
-    loginUser,
-    signinGoogle,
-  } = useAppContext();
+  const { user, showAlert, isLoading, displayAlert, loginUser, signinGoogle } =
+    useAppContext();
 
   const [show, setShow] = useState(false);
   const handleShow = () => {
@@ -156,10 +148,11 @@ function SignIn() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginLeft: "72px",
               }}
             >
               <GoogleLogin
-               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 buttonText="Signin with Google"
                 onSuccess={handleGoogleLoginSuccess}
                 onFailure={(error) =>

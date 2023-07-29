@@ -12,8 +12,7 @@ import { gapi } from "gapi-script";
 
 window.gapi.load("client:auth2", () => {
   window.gapi.client.init({
-    clientId:
-      "908507029918-1o9up7orqurl9jk2glmc4io7qdn7nkog.apps.googleusercontent.com",
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     plugin_name: "chat",
   });
 });
@@ -25,7 +24,6 @@ const initialState = {
   firstName: "",
   lastName: "",
   confirmPassword: "",
-  // isMember: false,
 };
 
 function SignUp() {
@@ -40,8 +38,6 @@ function SignUp() {
     loginUser,
     signupGoogle,
   } = useAppContext();
-
-  
 
   function handleGoogleSignupSuccess(tokenResponse) {
     const { accessToken } = tokenResponse;
@@ -146,7 +142,7 @@ function SignUp() {
                     className="in2"
                     type={show ? "text" : "password"}
                     name="password"
-                    placeholder="At least 8 characters"
+                    placeholder="At least 6 characters"
                   />
                   <i onClick={handleShow} className="eye1">
                     {eye}
@@ -195,18 +191,17 @@ function SignUp() {
                 }
                 cookiePolicy={"single_host_origin"}
               />
-            
             </div>
           </section>
           <section className="right">
             <div className="img-4">
-              <img className="pic-2" src="Assets/Image2.png" alt=""></img>
+              <img className="pic-2" src="Assets/galaxy.jpg" alt=""></img>
             </div>
             <div className="last-man">
-              <h2 className="last-last">Unparalleled Templates</h2>
+              <h2 className="last-last">Amazing NASA Images</h2>
               <p className="la-2">
-                Crafted by a team of professional designers, our templates are
-                eunparalleled in the market
+                Experience space from the comfort of your home, with just an
+                internet connection
               </p>
             </div>
           </section>

@@ -5,16 +5,17 @@ import moment from "moment";
 const Dashboard = () => {
   const { logoutUser, fetchNasaImage, nasaImageDetails } = useAppContext();
 
+  const currentDate = new Date().toISOString().slice(0, 10);
+
   useEffect(() => {
     // Check if image details exist in local storage and date matches current date
     const cachedNasaImage = JSON.parse(localStorage.getItem("imageDetails"));
-    const currentDate = new Date().toISOString().slice(0, 10);
     if (cachedNasaImage && cachedNasaImage.dateAdded === currentDate) {
-      return; // No need to do anything if the cached image date matches the current date
+      return;
     } else {
       fetchNasaImage();
     }
-  }, [fetchNasaImage]);
+  }, [fetchNasaImage, currentDate]);
 
   return (
     <div className="body-bg">

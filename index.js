@@ -1,20 +1,13 @@
 import express from "express";
 import "express-async-errors";
 import connectDB from "./db/connect.js";
-import morgan from "morgan";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 import dotenv from "dotenv";
 
-
-
 dotenv.config();
-
-
-
-
 
 import cookieParser from "cookie-parser";
 
@@ -56,7 +49,6 @@ app.get("*", (req, res) => {
 app.use(errorHandlerMiddleware);
 
 const start = async () => {
-  console.log("start");
   try {
     await connectDB(process.env.MONGO_URL);
     app.listen(port, () => {
