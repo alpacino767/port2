@@ -128,22 +128,6 @@ function SignIn() {
             <div className="">
               <label className="terms"></label>
             </div>
-            {/* <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            > <button
-            type="submit"
-            disabled={isLoading}
-            onSubmit={onSubmit}
-            style={{ cursor: "pointer" }}
-            // className="new-btn"
-          >
-            Login Fiber Account
-          </button>
-                </div> */}
             <div className="account1">
               <button
                 type="submit"
@@ -152,7 +136,7 @@ function SignIn() {
                 style={{ cursor: "pointer" }}
                 className="btn-5"
               >
-                Login Fiber Account
+                Login to your NASA Account
               </button>
             </div>
             <div className="beneath">

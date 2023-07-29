@@ -701,10 +701,11 @@ img {
   border-radius: 4px;
   border: none;
   color: white;
-  padding-right: 11rem;
-  padding-left: 11rem;
+  padding-right: 9rem;
+  padding-left: 9rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+  margin-left: 91px;
 }
 
 .btn-6 {
