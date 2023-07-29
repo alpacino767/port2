@@ -17,7 +17,7 @@ class NotFoundError extends Error {
 
 const fetchNasaImage = async (req, res) => {
   try {
-    const response = await axios.get(process.env.NASA_API_URL, {
+    const response = await axios.get("https://images-api.nasa.gov/search", {
       params: {
         q: "moon",
         media_type: "image",
